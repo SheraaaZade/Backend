@@ -3,6 +3,7 @@ package be.vinci;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.List;
 
@@ -33,5 +34,20 @@ public class TextResource {
                     .entity("Ressources not found").type("text/plain").build());
         }
         return textFound;
+    }
+
+    public Text createOne(Text text){
+        if(text == null || text.getContent() == null || text.getContent().isBlank()){
+            throw new WebApplicationException(
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                            .type("text/plain").build());
+        }
+        var texts = Json.parse();
+        text.setId(texts.size() + 1);
+        text.setContent(StringEscapeUtils.escapeHtml4(text.getContent()));
+        text.setLevel(text.getLevel());
+        texts.add(text);
+        Json.serialize(texts);
+        return text;
     }
 }
