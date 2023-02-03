@@ -1,5 +1,6 @@
 package be.vinci;
 
+import jakarta.inject.Singleton;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -7,6 +8,8 @@ import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.List;
 
+@Singleton
+@Path("texts")
 public class TextResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -36,6 +39,9 @@ public class TextResource {
         return textFound;
     }
 
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Text createOne(Text text){
         if(text == null || text.getContent() == null || text.getContent().isBlank()){
             throw new WebApplicationException(
@@ -47,6 +53,55 @@ public class TextResource {
         text.setContent(StringEscapeUtils.escapeHtml4(text.getContent()));
         text.setLevel(text.getLevel());
         texts.add(text);
+        Json.serialize(texts);
+        return text;
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Text deleteOne(@PathParam("id") int id){
+        if(id==0){
+            throw new WebApplicationException(
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                            .type("text/plain").build());
+        }
+        var texts = Json.parse();
+        Text textToDelete = texts.stream()
+                .filter(text -> text.getId() == id)
+                .findAny().orElse(null);
+        if(textToDelete == null){
+            throw new WebApplicationException(
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                            .type("text/plain").build());
+        }
+        texts.remove(textToDelete);
+        Json.serialize(texts);
+        return textToDelete;
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Text updateText(Text text, @PathParam("id") int id){
+        if(id == 0 || text == null || text.getContent() == null || text.getContent().isBlank()){
+            throw new WebApplicationException(
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                            .type("text/plain").build());
+        }
+
+        var texts = Json.parse();
+        Text textToUpdate = texts.stream()
+                .filter(t -> t.getId() == id).findAny().orElse(null);
+        if(textToUpdate == null){
+            throw new WebApplicationException(
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                            .type("text/plain").build());
+        }
+        text.setId(id);
+        text.setContent(StringEscapeUtils.escapeHtml4(text.getContent()));
+        text.setLevel(text.getLevel());
         Json.serialize(texts);
         return text;
     }
