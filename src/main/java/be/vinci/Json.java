@@ -17,29 +17,29 @@ public class Json {
 
     private static final String DB_FILE_PATH = "db.json";
     private static Path pathToDb = Paths.get(DB_FILE_PATH);
-    private static final String COLLECTION_NAME = "films";
+    private static final String COLLECTION_NAME = "texts";
     private final static ObjectMapper jsonMapper = new ObjectMapper();
 
-    public static void serialize(List<Text> films) {
+    public static void serialize(List<Text> texts) {
         try {
             // if no DB file, write a new collection to a new db file
             if (!Files.exists(pathToDb)) {
-                // Create an object and add a JSON array as POJO, e.g. { films:[...]}
-                ObjectNode newCollection = jsonMapper.createObjectNode().putPOJO(COLLECTION_NAME, films);
+                // Create an object and add a JSON array as POJO, e.g. { texts:[...]}
+                ObjectNode newCollection = jsonMapper.createObjectNode().putPOJO(COLLECTION_NAME, texts);
                 jsonMapper.writeValue(pathToDb.toFile(),
                         newCollection); // write the JSON Object in the DB file
                 return;
             }
             // get all collections : can be read as generic JsonNode, if it can be Object or Array;
             JsonNode allCollections = jsonMapper.readTree(
-                    pathToDb.toFile()); // e.g. { users:[...], films:[...]}
-            // remove current collection, e.g. remove the array of films
+                    pathToDb.toFile()); // e.g. { users:[...], texts:[...]}
+            // remove current collection, e.g. remove the array of texts
             if (allCollections.has(COLLECTION_NAME)) {
                 ((ObjectNode) allCollections).remove(COLLECTION_NAME); //e.g. it leaves { users:[...]}
             }
             // Prepare a JSON array from the list of POJOs for the collection to be updated, e.g. [{"film1",...}, ...]
-            ArrayNode updatedCollection = jsonMapper.valueToTree(films);
-            // Add the JSON array in allCollections, e.g. : { users:[...], films:[...]}
+            ArrayNode updatedCollection = jsonMapper.valueToTree(texts);
+            // Add the JSON array in allCollections, e.g. : { users:[...], texts:[...]}
             ((ObjectNode) allCollections).putArray(COLLECTION_NAME).addAll(updatedCollection);
             // write to the db file allCollections
             jsonMapper.writeValue(pathToDb.toFile(), allCollections);

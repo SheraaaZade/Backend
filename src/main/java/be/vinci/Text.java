@@ -1,19 +1,21 @@
 package be.vinci;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Text {
     private int id;
     private String content;
-    private Text level;
+    private final static String[] LEVELS = {"easy","medium","hard"};
+    private String level;
 
     public Text() {
     }
 
-    public Text(int id, String content, Text level) {
+    public Text(int id, String content, String level) {
         this.id = id;
         this.content = content;
-        this.level = level;
+        setLevel(level);
     }
 
     public int getId() {
@@ -24,7 +26,7 @@ public class Text {
         return content;
     }
 
-    public Text getLevel() {
+    public String getLevel() {
         return level;
     }
 
@@ -36,17 +38,14 @@ public class Text {
         this.content = content;
     }
 
-    public void setLevel(Text level) {
-        this.level = level;
+    public void setLevel(String level) {
+        this.level = Arrays.stream(LEVELS).filter(l -> l.equals(level))
+                .findFirst().orElse(null);
     }
 
     @Override
     public String toString() {
-        return "Text{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", level='" + level + '\'' +
-                '}';
+        return "Text [id=" + id + ", content=" + content + ", level=" + level + "]";
     }
 
     @Override
@@ -59,18 +58,6 @@ public class Text {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public enum Level{
-        EASY("easy"),MEDIUM("medium"),HARD("hard");
-        private String level;
-        Level(String level) {
-            this.level = level;
-        }
-
-        public String getLevel() {
-            return level;
-        }
+        return id;
     }
 }

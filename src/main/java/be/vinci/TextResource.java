@@ -7,20 +7,20 @@ import jakarta.ws.rs.core.Response;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
-@Path("texts")
+@Path("/texts")
 public class TextResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Text> getAll(
-            @DefaultValue("null") @QueryParam("level") String level){
+            @DefaultValue("") @QueryParam("level") String level){
         var texts = Json.parse();
-        if(level != null){
-            List<Text> textFiltered = texts.stream()
-                    .filter(text -> text.getLevel().equals(level))
-                    .toList();
-            return textFiltered;
+        if(!level.isBlank()){
+            return texts.stream()
+                    .filter(text -> text.getLevel().contentEquals(level))
+                    .collect(Collectors.toList());
         }
         return texts;
     }
@@ -43,15 +43,15 @@ public class TextResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Text createOne(Text text){
-        if(text == null || text.getContent() == null || text.getContent().isBlank()){
+        if(text == null || text.getContent() == null || text.getContent().isBlank()
+        || text.getLevel() == null){
             throw new WebApplicationException(
-                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info or unauthorized text level")
                             .type("text/plain").build());
         }
         var texts = Json.parse();
         text.setId(texts.size() + 1);
         text.setContent(StringEscapeUtils.escapeHtml4(text.getContent()));
-        text.setLevel(text.getLevel());
         texts.add(text);
         Json.serialize(texts);
         return text;
@@ -63,7 +63,7 @@ public class TextResource {
     public Text deleteOne(@PathParam("id") int id){
         if(id==0){
             throw new WebApplicationException(
-                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory id")
                             .type("text/plain").build());
         }
         var texts = Json.parse();
@@ -72,7 +72,7 @@ public class TextResource {
                 .findAny().orElse(null);
         if(textToDelete == null){
             throw new WebApplicationException(
-                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                    Response.status(Response.Status.NOT_FOUND).entity("Ressource not found")
                             .type("text/plain").build());
         }
         texts.remove(textToDelete);
@@ -85,9 +85,11 @@ public class TextResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Text updateText(Text text, @PathParam("id") int id){
-        if(id == 0 || text == null || text.getContent() == null || text.getContent().isBlank()){
+        System.out.println(text);
+        if( text == null || text.getContent() == null || text.getContent().isBlank()
+        || text.getLevel() == null){
             throw new WebApplicationException(
-                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info or unauthorized text level")
                             .type("text/plain").build());
         }
 
@@ -96,12 +98,13 @@ public class TextResource {
                 .filter(t -> t.getId() == id).findAny().orElse(null);
         if(textToUpdate == null){
             throw new WebApplicationException(
-                    Response.status(Response.Status.BAD_REQUEST).entity("Lacks of mandatory info")
+                    Response.status(Response.Status.NOT_FOUND).entity("Resources not found")
                             .type("text/plain").build());
         }
-        text.setId(id);
+        text.setId(texts.size() + 1);
         text.setContent(StringEscapeUtils.escapeHtml4(text.getContent()));
-        text.setLevel(text.getLevel());
+        texts.remove(text);
+        texts.add(text);
         Json.serialize(texts);
         return text;
     }

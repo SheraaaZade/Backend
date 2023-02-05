@@ -1,0 +1,25 @@
+//@baseUrl = http://localhost:8080
+### View all texts: GET texts
+GET {{baseUrl}}/texts
+
+### Create one text
+POST {{baseUrl}}/texts
+Content-Type: application/json
+
+{
+  "id": 1,
+  "content": "blablabla",
+  "level": "easy"
+}
+
+### Delete text with id = 2
+DELETE {{baseUrl}}/texts/2
+
+### Update text with id = 3
+PUT {{baseUrl}}/texts/3
+Content-Type: application/json
+
+{
+  "content": "BLABLA",
+  "level": "hard"
+}

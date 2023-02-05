@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="405138fc-7e97-41a1-8f79-98a9aeed9669" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/request/http-client.env.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/request/text-restclient.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/vinci/Json.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/vinci/Json.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/vinci/Text.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/vinci/Text.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/be/vinci/TextResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/vinci/TextResource.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTTP Request" />
+        <option value="HTTP Public Environment File" />
       </list>
     </option>
   </component>
@@ -30,6 +37,9 @@
         <option name="url" value="https://github.com/SheraaaZade/Backend.git" />
       </UrlAndAccount>
     </option>
+  </component>
+  <component name="HttpClientSelectedEnvironments">
+    <file url="file://$PROJECT_DIR$/request/text-restclient.http" environment="dev" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -46,8 +56,18 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/chehr/OneDrive/Bureau/Cours/Q2/Backend-Java/baja-demos-main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "rest.client.default.execution.environment": "dev",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -55,10 +75,10 @@
       <recent name="be.vinci" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="HTTP Request.text-restclient | View all texts: GET texts">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="be.vinci.Main" />
-      <module name="Module1" />
+      <module name="films-api-module1" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="be.vinci.*" />
@@ -69,9 +89,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="text-restclient | Create one text" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/request/text-restclient.http" requestIdentifier="Create one text" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="text-restclient | Delete text with id = 2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/request/text-restclient.http" index="3" requestIdentifier="Delete text with id = 2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="text-restclient | Update text with id = 3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/request/text-restclient.http" index="4" requestIdentifier="Update text with id = 3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="text-restclient | View all texts: GET texts" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/request/text-restclient.http" requestIdentifier="View all texts: GET texts" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.text-restclient | View all texts: GET texts" />
+        <item itemvalue="HTTP Request.text-restclient | Update text with id = 3" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="HTTP Request.text-restclient | Create one text" />
+        <item itemvalue="HTTP Request.text-restclient | Delete text with id = 2" />
       </list>
     </recent_temporary>
   </component>
@@ -84,6 +120,7 @@
       <option name="presentableId" value="Default" />
       <updated>1675422716497</updated>
       <workItem from="1675422717989" duration="4157000" />
+      <workItem from="1675550288293" duration="5614000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1675425924143</created>
